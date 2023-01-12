@@ -2,11 +2,17 @@ import type * as Discord from "discord.js";
 
 import docs from "./docs.js";
 
+export type MessageWithArgs = Discord.Message & {
+	args: string[];
+};
+
 export type CommandType = {
 	name: string;
 	description: string;
 	options: Discord.APIApplicationCommandOption[];
-	exec: (interaction: Discord.CommandInteraction) => unknown;
+	exec: (
+		caller: MessageWithArgs | Discord.ChatInputCommandInteraction,
+	) => Discord.BaseMessageOptions | Promise<Discord.BaseMessageOptions>;
 };
 
 const commands: CommandType[] = [docs];

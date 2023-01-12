@@ -30,15 +30,16 @@ export default {
 			name: "query",
 			description: "The query to search for",
 			type: Discord.ApplicationCommandOptionType.String,
-			required: true,
 		},
 	],
-	exec: async (interaction: Discord.CommandInteraction) => {
-		if (!interaction.isChatInputCommand()) return;
+	exec: async (caller) => {
+		const query =
+			caller instanceof Discord.ChatInputCommandInteraction
+				? caller.options.getString("query")
+				: caller.args.join(" ");
 
-		const query = interaction.options.getString("query");
 		if (!query) {
-			return interaction.reply("You need to provide a search query.");
+			return FOSSCORD_DOCS_EMBED;
 		}
 
 		const res = await fetch(FOSSCORD_DOCS_BASE_URL + SEARCH_ENDPOINT);
@@ -61,6 +62,7 @@ export default {
 				.replaceAll("</code>", "`");
 
 		const searchResult = index.search(query);
+
 		const docs = searchResult
 			.map((x) => search.docs.find((y) => y.title == x.ref))
 			.map((x) => ({
@@ -70,25 +72,21 @@ export default {
 			})) as MKDOCS_RESULT[];
 
 		if (!docs || docs.length == 0)
-			return await interaction.reply(
-				"Could not find any matching documents. Try a simpler query.",
-			);
+			return "Could not find any matching documents. Try a simpler query.";
 
 		const main = docs.shift() as MKDOCS_RESULT;
 
-		return await interaction.reply({
+		return {
 			embeds: [
 				{
 					title: main.title,
 					url: `${FOSSCORD_DOCS_BASE_URL}/${main.location}`,
-					description: main.text.slice(0, 250) + " ...",
+					description: main.text.slice(0, 300) + " ...",
 					fields: docs
 						.filter((x) => !!x.text)
 						.map((x) => ({
 							name: x.title,
-							value:
-								x.text.slice(0, 50) +
-								` ...\n[Link](${FOSSCORD_DOCS_BASE_URL}/${x.location})`,
+							value: `[Link](${FOSSCORD_DOCS_BASE_URL}/${x.location})`,
 							inline: true,
 						}))
 						.slice(0, 4),
@@ -97,6 +95,49 @@ export default {
 					},
 				},
 			],
-		});
+		};
 	},
 } as CommandType;
+
+const FOSSCORD_DOCS_EMBED = {
+	embeds: [
+		{
+			title: "Fosscord Documentation",
+			url: FOSSCORD_DOCS_BASE_URL,
+			description:
+				"Fosscord is a free and open source, selfhostable, Discord.com-compatible chat platform.",
+			fields: [
+				{
+					inline: true,
+					name: "FAQ",
+					value: `[Link](${FOSSCORD_DOCS_BASE_URL}/faq)`,
+				},
+				{
+					inline: true,
+					name: "Server Setup",
+					value: `[Link](${FOSSCORD_DOCS_BASE_URL}/server/setup)`,
+				},
+				{
+					inline: true,
+					name: "Reverse Proxies",
+					value: `[Link](${FOSSCORD_DOCS_BASE_URL}/setup/server/reverseProxy)`,
+				},
+				{
+					inline: true,
+					name: "Configuration",
+					value: `[Link](${FOSSCORD_DOCS_BASE_URL}/setup/server/configuration)`,
+				},
+				{
+					inline: true,
+					name: "Security",
+					value: `[Link](${FOSSCORD_DOCS_BASE_URL}/setup/server/security/)`,
+				},
+				{
+					inline: true,
+					name: "Contributing",
+					value: `[Link](${FOSSCORD_DOCS_BASE_URL}/contributing)`,
+				},
+			],
+		},
+	],
+};
