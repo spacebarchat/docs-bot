@@ -47,7 +47,7 @@ export default {
 		const index = lunr(function () {
 			this.ref("title");
 			this.field("title", { boost: 2 });
-			this.field("url", { boost: 1 });
+			this.field("location", { boost: 1 });
 			this.field("text");
 
 			search.docs.forEach((x) => this.add(x));
