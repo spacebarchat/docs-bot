@@ -58,6 +58,8 @@ export default {
 			x
 				.replaceAll("<p>", "")
 				.replaceAll("</p>", "\n\n")
+				.replaceAll("<pre><code>", "```")
+				.replaceAll("</pre></code>", "```")
 				.replaceAll("<code>", "`")
 				.replaceAll("</code>", "`");
 
