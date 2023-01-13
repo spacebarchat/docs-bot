@@ -2,6 +2,7 @@ import * as Discord from "discord.js";
 import type { CommandType } from ".";
 import lunr from "lunr";
 import fetch from "node-fetch";
+import he from "he";
 
 const SEARCH_ENDPOINT = "/search/search_index.json";
 const FOSSCORD_DOCS_BASE_URL = "https://docs.fosscord.com";
@@ -46,7 +47,7 @@ export default {
 		const search = (await res.json()) as MKDOCS_SEARCH_RESULTS;
 
 		const index = lunr(function () {
-			this.ref("title");
+			this.ref("location");
 			this.field("title", { boost: 2 });
 			this.field("location", { boost: 1 });
 			this.field("text");
@@ -59,31 +60,49 @@ export default {
 				.replaceAll("<p>", "")
 				.replaceAll("</p>", "\n\n")
 				.replaceAll("<pre><code>", "```")
-				.replaceAll("</pre></code>", "```")
+				.replaceAll("</code></pre>", "```")
 				.replaceAll("<code>", "`")
-				.replaceAll("</code>", "`");
+				.replaceAll("</code>", "`")
+				.replaceAll("<ol>", "")
+				.replaceAll("</ol>", "\n")
+				.replaceAll("<li>", "*");
 
 		const searchResult = index.search(query);
 
 		const docs = searchResult
-			.map((x) => search.docs.find((y) => y.title == x.ref))
+			.map((x) => search.docs.find((y) => y.location == x.ref))
 			.map((x) => ({
 				...x,
 				title: replaceHtml(x?.title || ""),
 				text: replaceHtml(x?.text || ""),
-			})) as MKDOCS_RESULT[];
+			}))
+			.filter((x) => x.text.length > 0) as MKDOCS_RESULT[];
 
 		if (!docs || docs.length == 0)
 			return "Could not find any matching documents. Try a simpler query.";
 
 		const main = docs.shift() as MKDOCS_RESULT;
 
+		const textGoal = main.text.slice(0, 300);
+		const lastCodeBlockStart = textGoal.lastIndexOf("`");
+		const description =
+			lastCodeBlockStart !== -1
+				? main.text.slice(
+						0,
+						lastCodeBlockStart +
+							main.text
+								.slice(lastCodeBlockStart + 3)
+								.indexOf("`") +
+							6,
+				  )
+				: textGoal;
+
 		return {
 			embeds: [
 				{
 					title: main.title,
 					url: `${FOSSCORD_DOCS_BASE_URL}/${main.location}`,
-					description: main.text.slice(0, 300) + " ...",
+					description: he.decode(description) + " ...",
 					fields: docs
 						.filter((x) => !!x.text)
 						.map((x) => ({
