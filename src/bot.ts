@@ -33,6 +33,13 @@ export default class Bot {
 			await interaction.reply(ret);
 
 			return;
+		} else if (interaction.isAutocomplete()) {
+			const command = Commands.find(
+				(x) => x.name == interaction.commandName,
+			);
+			if (!command || !command.autocomplete) return;
+
+			await command.autocomplete(interaction);
 		}
 	};
 

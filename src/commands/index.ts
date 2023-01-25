@@ -13,6 +13,7 @@ export type CommandType = {
 	exec: (
 		caller: MessageWithArgs | Discord.ChatInputCommandInteraction,
 	) => Discord.BaseMessageOptions | Promise<Discord.BaseMessageOptions>;
+	autocomplete?: (caller: Discord.AutocompleteInteraction) => unknown;
 };
 
 const commands: CommandType[] = [docs];
