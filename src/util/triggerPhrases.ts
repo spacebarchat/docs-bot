@@ -24,7 +24,7 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 	if (caller.member.joinedAt.valueOf() < week.valueOf()) return false;
 
 	// or if they have a role
-	if (caller.member.roles.cache.size > 0) return false;
+	if (caller.member.roles.cache.size > 1) return false;
 
 	const content = caller.content;
 
