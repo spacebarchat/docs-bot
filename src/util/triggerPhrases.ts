@@ -18,13 +18,13 @@ const sendDocs = async (
 export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 	if (!caller.member || !caller.member.joinedAt) return false;
 
-	// // don't bother people that have been here at least a week
-	// const week = new Date();
-	// week.setDate(new Date().getDate() - 7);
-	// if (caller.member.joinedAt.valueOf() < week.valueOf()) return false;
+	// don't bother people that have been here at least a week
+	const week = new Date();
+	week.setDate(new Date().getDate() - 7);
+	if (caller.member.joinedAt.valueOf() < week.valueOf()) return false;
 
-	// // or if they have a role
-	// if (caller.member.roles.cache.size > 0) return false;
+	// or if they have a role
+	if (caller.member.roles.cache.size > 0) return false;
 
 	const content = caller.content;
 
