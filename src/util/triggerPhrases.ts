@@ -87,5 +87,5 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		return true;
 	}
 
-	return true;
+	return false;
 };
