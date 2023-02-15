@@ -1,5 +1,6 @@
 import type * as Discord from "discord.js";
 import Commands, { MessageWithArgs } from "./commands/index.js";
+import { triggerPhrase } from "./util/triggerPhrases.js";
 
 const PREFIX = process.env.PREFIX as string;
 
@@ -45,6 +46,10 @@ export default class Bot {
 
 	messageCreate = async (message: Discord.Message) => {
 		if (message.author.bot) return;
+
+		const wasTriggerPhrase = await triggerPhrase(message);
+		if (wasTriggerPhrase) return;
+
 		if (!message.content.startsWith(PREFIX)) return;
 
 		const args = message.content.slice(PREFIX.length).split(" ");

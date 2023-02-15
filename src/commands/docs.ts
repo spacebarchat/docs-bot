@@ -91,6 +91,7 @@ export default {
 			autocomplete: true,
 		},
 	],
+
 	exec: async (caller) => {
 		const query =
 			caller instanceof Discord.ChatInputCommandInteraction
@@ -149,6 +150,7 @@ export default {
 			],
 		};
 	},
+
 	autocomplete: async (caller) => {
 		// thanks djs guide! https://discordjs.guide/slash-commands/autocomplete.html#sending-results
 		const focus = caller.options.getFocused();
