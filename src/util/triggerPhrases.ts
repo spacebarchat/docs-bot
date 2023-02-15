@@ -82,7 +82,7 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		await caller.reply(
 			"Webrtc (voice and video support) is planned, but is not ready yet." +
 				" It is a very difficult feature to implement, as we must replicate Discord's server behaviour exactly.\n" +
-				" There is no ETA on when voice and video support will be available.",
+				"There is no ETA on when voice and video support will be available.",
 		);
 		return true;
 	}
