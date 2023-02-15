@@ -33,7 +33,7 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 			content.toLowerCase() === "help please") &&
 		caller.attachments.size === 0 // they probably told us in the attachment
 	) {
-		caller.reply(
+		await caller.reply(
 			"We cannot help you if you do not tell us what your issue is.",
 		);
 		return true;
@@ -58,7 +58,7 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 	}
 
 	if (content.includes("SyntaxError: Unexpected token '.'")) {
-		caller.reply(
+		await caller.reply(
 			"Update your NodeJS version to at least version 16. " +
 				"Check out <https://github.com/nodesource/distributions> if you're on Linux, or https://nodejs.org/en/ on Windows.",
 		);
@@ -66,10 +66,23 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 	}
 
 	if (content.match(/Unexpected (token \w|number) in JSON at position \d/g)) {
-		caller.reply(
+		await caller.reply(
 			"You have misconfigured your database. " +
 				"If you have recently edited the `config` table, it's values are JSON. " +
 				'Strings must be wrapped in quotes. For example, `"https://staging.fosscord.com"`',
+		);
+		return true;
+	}
+
+	if (
+		(content.includes("voice") || content.includes("webrtc")) &&
+		(content.includes("when") ||
+			(content.includes("is") && content.includes("working")))
+	) {
+		await caller.reply(
+			"Webrtc (voice and video support) is planned, but is not ready yet." +
+				" It is a very difficult feature to implement, as we must replicate Discord's server behaviour exactly.\n" +
+				" There is no ETA on when voice and video support will be available.",
 		);
 		return true;
 	}
