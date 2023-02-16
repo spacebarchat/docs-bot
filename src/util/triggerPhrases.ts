@@ -26,11 +26,10 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 	// or if they have a role
 	if (caller.member.roles.cache.size > 1) return false;
 
-	const content = caller.content;
+	const content = caller.content.toLowerCase();
 
 	if (
-		(content.toLowerCase() === "help" ||
-			content.toLowerCase() === "help please") &&
+		(content === "help" || content === "help please") &&
 		caller.attachments.size === 0 // they probably told us in the attachment
 	) {
 		await caller.reply(
@@ -57,7 +56,7 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		);
 	}
 
-	if (content.includes("SyntaxError: Unexpected token '.'")) {
+	if (content.includes("syntaxerror: unexpected token '.'")) {
 		await caller.reply(
 			"Update your NodeJS version to at least version 16. " +
 				"Check out <https://github.com/nodesource/distributions> if you're on Linux, or https://nodejs.org/en/ on Windows.",
@@ -65,7 +64,7 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		return true;
 	}
 
-	if (content.match(/Unexpected (token \w|number) in JSON at position \d/g)) {
+	if (content.match(/unexpected (token \w|number) in json at position \d/g)) {
 		await caller.reply(
 			"You have misconfigured your database. " +
 				"If you have recently edited the `config` table, it's values are JSON. " +
@@ -83,6 +82,25 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 			"Webrtc (voice and video support) is planned, but is not ready yet." +
 				" It is a very difficult feature to implement, as we must replicate Discord's server behaviour exactly.\n" +
 				"There is no ETA on when voice and video support will be available.",
+		);
+		return true;
+	}
+
+	if (
+		["replit", "heroku", "vercel", "glitch", "playit", "beget"].find((x) =>
+			content.includes(x),
+		) &&
+		(content.includes("can fosscord be hosted on") ||
+			content.includes("can i host fosscord on") ||
+			content.includes("can i use") ||
+			content.includes("put on") ||
+			content.includes("put it on"))
+	) {
+		await caller.reply(
+			"Hosting Fosscord on replit, heroku, vercel, or other such platforms is not supported. " +
+				"While you *can* do it, it is not a good experience for the user or the instance owner.\n" +
+				"A big issue with hosting on replit is that you have nowhere to host a dedicated database, which forces you to use sqlite, " +
+				"but you cannot edit the sqlite database that is used.",
 		);
 		return true;
 	}
