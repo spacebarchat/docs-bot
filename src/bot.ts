@@ -1,5 +1,6 @@
 import type * as Discord from "discord.js";
 import Commands, { MessageWithArgs } from "./commands/index.js";
+import { ghFilePreview } from "./util/ghFIlePreview.js";
 import { triggerPhrase } from "./util/triggerPhrases.js";
 
 const PREFIX = process.env.PREFIX as string;
@@ -49,6 +50,9 @@ export default class Bot {
 
 		const wasTriggerPhrase = await triggerPhrase(message);
 		if (wasTriggerPhrase) return;
+
+		const wasGhPreview = await ghFilePreview(message);
+		if (wasGhPreview) return;
 
 		if (!message.content.startsWith(PREFIX)) return;
 
