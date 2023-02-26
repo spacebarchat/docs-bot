@@ -40,7 +40,11 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		return true;
 	}
 
-	if (content.includes("/api/ping") || content.includes('"ping":"pong!"'))
+	if (
+		content.includes("/api/ping") ||
+		content.includes('"ping":"pong!"') ||
+		content.includes("ping pong")
+	)
 		return await sendDocs(
 			"test client",
 			"By default the test Discord.com client is disabled, which is why you are getting sent to /api/ping. To enable it, follow this guide.",
