@@ -44,12 +44,14 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		content.includes("/api/ping") ||
 		content.includes('"ping":"pong!"') ||
 		content.includes("ping pong")
-	)
-		return await sendDocs(
-			"test client",
-			"By default the test Discord.com client is disabled, which is why you are getting sent to /api/ping. To enable it, follow this guide.",
-			caller,
+	) {
+		await caller.reply(
+			"You're looking at the normal output of your Fosscord instance. " +
+				"To connect and use your instance, you'll need a client.\n" +
+				"You can find the official Fosscord client at <https://app.fosscord.com> or <https://github.com/fosscord/fosscord-client>.",
 		);
+		return true;
+	}
 
 	if (
 		content.includes("how") &&
