@@ -1,7 +1,7 @@
 {
-	"name": "fosscord-docs-bot",
+	"name": "docs-bot",
 	"version": "1.0.0",
-	"description": "Fosscord Documentation Bot",
+	"description": "Spacebar Documentation Bot",
 	"main": "dist/index.js",
 	"types": "src/index.ts",
 	"scripts": {
@@ -11,7 +11,7 @@
 		"lint": "eslint . --fix",
 		"prettier": "prettier --write ."
 	},
-	"author": "Fosscord",
+	"author": "Spacebar",
 	"license": "AGPLV3",
 	"type": "module",
 	"dependencies": {
