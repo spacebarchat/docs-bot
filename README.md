@@ -1,11 +1,11 @@
-# Fosscord Documentation Bot.
+# Spacebar Documentation Bot.
 
 ## Setup
 
 ```sh
-git clone https://github.com/fosscord/fosscord-docs-bot.git
+git clone https://github.com/spacebarchat/docs-bot.git
 
-cd fosscord-docs-bot
+cd docs-bot
 
 # Create a .env file based on the .env.template file.
 
