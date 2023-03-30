@@ -46,9 +46,9 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		content.includes("ping pong")
 	) {
 		await caller.reply(
-			"You're looking at the normal output of your Fosscord instance. " +
+			"You're looking at the normal output of your Spacebar instance. " +
 				"To connect and use your instance, you'll need a client.\n" +
-				"You can find the official Fosscord client at <https://app.fosscord.com> or <https://github.com/fosscord/fosscord-client>.",
+				"You can find the official Spacebar client at <https://app.fosscord.com> or <https://github.com/spacebarchat/client>.",
 		);
 		return true;
 	}
@@ -76,7 +76,7 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		await caller.reply(
 			"You have misconfigured your database. " +
 				"If you have recently edited the `config` table, it's values are JSON. " +
-				'Strings must be wrapped in quotes. For example, `"https://staging.fosscord.com"`',
+				'Strings must be wrapped in quotes. For example, `"https://staging.spacebar.chat"`',
 		);
 		return true;
 	}
@@ -98,14 +98,14 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		["replit", "heroku", "vercel", "glitch", "playit", "beget"].find((x) =>
 			content.includes(x),
 		) &&
-		(content.includes("can fosscord be hosted on") ||
-			content.includes("can i host fosscord on") ||
+		(content.includes("can spacebar be hosted on") ||
+			content.includes("can i host spacebar on") ||
 			content.includes("can i use") ||
 			content.includes("put on") ||
 			content.includes("put it on"))
 	) {
 		await caller.reply(
-			"Hosting Fosscord on replit, heroku, vercel, or other such platforms is not supported. " +
+			"Hosting Spacebar on replit, heroku, vercel, or other such platforms is not supported. " +
 				"While you *can* do it, it is not a good experience for the user or the instance owner.\n" +
 				"A big issue with hosting on replit is that you have nowhere to host a dedicated database, which forces you to use sqlite, " +
 				"but you cannot edit the sqlite database that is used.",
