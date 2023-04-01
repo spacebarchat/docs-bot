@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2023 Maddy <https://github.com/MaddyUnderStars>
+//
+// SPDX-License-Identifier: AGPL-3.0
 import type * as Discord from "discord.js";
 import Commands, { MessageWithArgs } from "./commands/index.js";
 import { ghFilePreview } from "./util/ghFIlePreview.js";

@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2023 Maddy <https://github.com/MaddyUnderStars>
+
+SPDX-License-Identifier: AGPL-3.0
+-->
 # Spacebar Documentation Bot.
 
 ## Setup
