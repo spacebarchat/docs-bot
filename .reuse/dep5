@@ -1,0 +1,24 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: docs-bot
+Upstream-Contact: Spacebar Developer Team <https://spacebar.chat>
+Source: https://github.com/spacebarchat/docs-bot
+
+Files: .env.template
+ .eslintignore
+ .eslintrc.json
+ .github/workflows/ci.yml
+ .gitignore
+ .husky/.gitattributes
+ .husky/pre-commit
+ .lintstagedrc
+ .prettierrc
+ package-lock.json
+ package.json
+ src/util/ghFIlePreview.ts
+ tsconfig.json
+Copyright: 2023 Maddy <https://github.com/MaddyUnderStars>
+License: AGPL-3.0
+
+Files: .vscode/launch.json
+Copyright: 2023 Microsoft Corporation
+License: MIT
