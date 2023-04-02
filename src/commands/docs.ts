@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2023 Maddy <https://github.com/MaddyUnderStars>
 //
-// SPDX-License-Identifier: AGPL-3.0
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import * as Discord from "discord.js";
 import type { CommandType } from ".";
 import lunr from "lunr";

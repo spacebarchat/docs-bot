@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2023 Maddy <https://github.com/MaddyUnderStars>
 //
-// SPDX-License-Identifier: AGPL-3.0
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import { Message } from "discord.js";
 import docsCommand from "./../commands/docs.js";
 

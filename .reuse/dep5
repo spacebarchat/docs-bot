@@ -17,7 +17,7 @@ Files: .env.template
  src/util/ghFIlePreview.ts
  tsconfig.json
 Copyright: 2023 Maddy <https://github.com/MaddyUnderStars>
-License: AGPL-3.0
+License: AGPL-3.0-or-later
 
 Files: .vscode/launch.json
 Copyright: 2023 Microsoft Corporation
