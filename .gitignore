@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2023 Maddy <https://github.com/MaddyUnderStars>
+#
+# SPDX-License-Identifier: CC0-1.0
 node_modules
 dist
 .env
