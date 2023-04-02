@@ -6,7 +6,6 @@ Source: https://github.com/spacebarchat/docs-bot
 Files: .env.template
  .eslintignore
  .eslintrc.json
- .github/workflows/ci.yml
  .gitignore
  .husky/.gitattributes
  .husky/pre-commit
