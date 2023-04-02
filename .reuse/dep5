@@ -16,7 +16,8 @@ Files: .env.template
  package.json
  src/util/ghFIlePreview.ts
  tsconfig.json
-Copyright: 2023 Maddy <https://github.com/MaddyUnderStars>
+Copyright: 2023 Spacebar Contributors <https://spacebar.chat>
+           2023 Maddy <https://github.com/MaddyUnderStars>
 License: AGPL-3.0-or-later
 
 Files: .vscode/launch.json
