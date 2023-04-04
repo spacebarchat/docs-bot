@@ -50,6 +50,7 @@ const replaceHtml = (x: string) =>
 		.replaceAll("<ol>", "")
 		.replaceAll("</ol>", "\n")
 		.replaceAll("<li>", "*")
+		.replaceAll("</li>", "\n")
 		.replaceAll("<ul>", "*")
 		.replaceAll("</ul>", "");
 
