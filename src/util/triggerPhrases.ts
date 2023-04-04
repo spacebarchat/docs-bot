@@ -117,5 +117,20 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		return true;
 	}
 
+	if (
+		(content.includes("rory") ||
+			content.includes("talk") ||
+			content.includes("why")) &&
+		(content.includes("webhook") || content.includes("bot"))
+	) {
+		await caller.reply(
+			"This user is not a bot or a webhook!" +
+				"They are most likely using PluralKit, which allows a single discord.com account to control multiple 'pseudo accounts'.\n" +
+				"In our guild, this is most used by multiple people sharing a single body (aka. *systems*).\n" +
+				"You can learn more about systems here: <https://morethanone.info/>",
+		);
+		return true;
+	}
+
 	return false;
 };
