@@ -23,9 +23,9 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 	if (!caller.member || !caller.member.joinedAt) return false;
 
 	if (process.env.NODE_ENV !== "development") {
-		// don't bother people that have been here at least a week
+		// don't bother people that have been here at least 2 weeks
 		const week = new Date();
-		week.setDate(new Date().getDate() - 7);
+		week.setDate(new Date().getDate() - 14);
 		if (caller.member.joinedAt.valueOf() < week.valueOf()) return false;
 
 		// or if they have a role
@@ -34,25 +34,18 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 
 	const content = caller.content.toLowerCase();
 
+	// const referencedMessage = caller.reference?.messageId
+	// 	? await caller.channel.messages.fetch(caller.reference.messageId)
+	// 	: undefined;
+
 	if (
-		(content === "help" || content === "help please") &&
+		(content === "help" ||
+			content === "help please" ||
+			content == "help me") &&
 		caller.attachments.size === 0 // they probably told us in the attachment
 	) {
 		await caller.reply(
 			"We cannot help you if you do not tell us what your issue is.",
-		);
-		return true;
-	}
-
-	if (
-		content.includes("/api/ping") ||
-		content.includes('"ping":"pong!"') ||
-		content.includes("ping pong")
-	) {
-		await caller.reply(
-			"You're looking at the normal output of your Spacebar instance. " +
-				"To connect and use your instance, you'll need a client.\n" +
-				"You can find the official Spacebar client at <https://app.fosscord.com> or <https://github.com/spacebarchat/client>.",
 		);
 		return true;
 	}
@@ -80,15 +73,18 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		await caller.reply(
 			"You have misconfigured your database. " +
 				"If you have recently edited the `config` table, it's values are JSON. " +
-				'Strings must be wrapped in quotes. For example, `"https://staging.spacebar.chat"`',
+				'Strings must be wrapped in quotes. For example, `"https://gateway.spacebar.chat"`',
 		);
 		return true;
 	}
 
 	if (
-		(content.includes("voice") || content.includes("webrtc")) &&
+		(content.includes("voice") ||
+			content.includes("webrtc") ||
+			content.includes("video")) &&
 		(content.includes("when") ||
-			(content.includes("is") && content.includes("working")))
+			content.includes("eta") ||
+			content.includes("how long"))
 	) {
 		await caller.reply(
 			"Webrtc (voice and video support) is planned, but is not ready yet." +
@@ -102,9 +98,8 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		["replit", "heroku", "vercel", "glitch", "playit", "beget"].find((x) =>
 			content.includes(x),
 		) &&
-		(content.includes("can spacebar be hosted on") ||
-			content.includes("can i host spacebar on") ||
-			content.includes("can i use") ||
+		(content.includes("host") ||
+			content.includes("use") ||
 			content.includes("put on") ||
 			content.includes("put it on"))
 	) {
@@ -120,12 +115,19 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 	if (
 		(content.includes("rory") ||
 			content.includes("talk") ||
-			content.includes("why")) &&
-		(content.includes("webhook") || content.includes("bot"))
+			content.includes("why") ||
+			content.includes("say") ||
+			content.includes("echo") ||
+			content.includes("how") ||
+			content.includes("user") ||
+			content.includes("what")) &&
+		(content.includes("webhook") ||
+			content.includes("bot") ||
+			content.includes("integration"))
 	) {
 		await caller.reply(
-			"This user is not a bot or a webhook!" +
-				"They are most likely using PluralKit, which allows a single discord.com account to control multiple 'pseudo accounts'.\n" +
+			"**This user is not a bot or a webhook!**\n" +
+				"They are most likely using **PluralKit**, a bot which allows a single discord.com account to control multiple 'pseudo accounts'.\n" +
 				"In our guild, this is most used by multiple people sharing a single body (aka. *systems*).\n" +
 				"You can learn more about systems here: <https://morethanone.info/>",
 		);
