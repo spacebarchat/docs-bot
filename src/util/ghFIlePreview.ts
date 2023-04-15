@@ -37,7 +37,7 @@ export const ghFilePreview = async (caller: Message): Promise<boolean> => {
 	const fileLines = file.split("\n");
 
 	let out = "";
-	for (let i = lines[0] - 1; i <= lines[1]; i++) {
+	for (let i = lines[0] - 1; i <= (lines[1] || lines[0] - 1); i++) {
 		if (fileLines.length < i || i < 0) break;
 		if (fileLines[i] == undefined) break;
 		out += fileLines[i] + "\n";
