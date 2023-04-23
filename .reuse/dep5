@@ -14,11 +14,15 @@ Files: .env.template
  package-lock.json
  package.json
  src/util/ghFIlePreview.ts
+ src/util/triggerPhrases.ts
  tsconfig.json
 Copyright: 2023 Spacebar Contributors <https://spacebar.chat>
-           2023 Maddy <https://github.com/MaddyUnderStars>
 License: AGPL-3.0-or-later
 
 Files: .vscode/launch.json
 Copyright: 2023 Microsoft Corporation
 License: MIT
+
+Files: src/util/unindent.ts
+Copyright: Vendicated and contributors
+License: GPL-3.0-or-later
