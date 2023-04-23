@@ -3,7 +3,7 @@
 
 import type * as Discord from "discord.js";
 import Commands, { MessageWithArgs } from "./commands/index.js";
-import { ghFilePreview } from "./util/ghFIlePreview.js";
+import { ghFilePreview } from "./util/ghFilePreview.js";
 import { triggerPhrase } from "./util/triggerPhrases.js";
 
 const PREFIX = process.env.PREFIX as string;
