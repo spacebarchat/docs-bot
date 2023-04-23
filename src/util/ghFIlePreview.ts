@@ -1,9 +1,9 @@
 // SPDX-FileCopyrightText: 2023 Spacebar Contributors <https://spacebar.chat>
-// SPDX-FileCopyrightText: 2023 Maddy <https://github.com/MaddyUnderStars>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
 import { Message } from "discord.js";
 import fetch from "node-fetch";
+import { unindent } from "./unindent";
 
 const LINK_REGEX =
 	/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g;
@@ -44,6 +44,8 @@ export const ghFilePreview = async (caller: Message): Promise<boolean> => {
 	}
 
 	if (!out) return false;
+
+	out = unindent(out);
 
 	const fileType = url.pathname.split(".").reverse()[0];
 
