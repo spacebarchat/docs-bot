@@ -60,6 +60,21 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		);
 	}
 
+	if (
+		(content.includes("where") ||
+			(content.includes("how") &&
+				(content.includes("edit") || content.includes("set")))) &&
+		content.includes("config")
+	) {
+		return await sendDocs(
+			"configuration",
+			"The Spacebar server configuration is set in your database's `config` table. " +
+				"By default, that's an SQLite database in the project root called `database.db`." +
+				"You may change which DBMS to use by setting the `DATABASE` environment variable. More details below.",
+			caller,
+		);
+	}
+
 	if (content.includes("syntaxerror: unexpected token '.'")) {
 		await caller.reply(
 			"Update your NodeJS version to at least version 16. " +
