@@ -49,15 +49,15 @@ export const ghFilePreview = async (caller: Message): Promise<boolean> => {
 
 	const fileType = url.pathname.split(".").reverse()[0];
 
-	await caller.reply(
-		url.pathname.split("/").reverse()[0] +
-			url.hash +
-			"\n```" +
-			fileType +
-			"\n" +
-			out +
-			"```",
-	);
+	const msg =
+		url.pathname.split("/").reverse()[0] + // file name
+		url.hash + // line numbers
+		"\n```" +
+		fileType +
+		"\n";
+
+	// 2000 is maximum discord.com message length. -3 for ``` at end.
+	await caller.reply(msg + out.substring(0, 2000 - msg.length - 3) + "```");
 
 	return true;
 };
