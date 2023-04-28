@@ -23,6 +23,9 @@ export const ghFilePreview = async (caller: Message): Promise<boolean> => {
 	const link = links[0];
 
 	const url = new URL(link);
+
+	if (url.hostname !== "github.com") return false;
+
 	const lines = url.hash
 		.match(/\d*/g)
 		?.filter((x) => !!x)
