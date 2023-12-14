@@ -35,7 +35,7 @@ export default class Bot {
 			if (!command) return;
 
 			const ret = await command.exec(interaction);
-			await interaction.reply(ret);
+			if (ret) await interaction.reply(ret);
 
 			return;
 		} else if (interaction.isAutocomplete()) {
@@ -67,9 +67,9 @@ export default class Bot {
 		if (!found) return;
 
 		// TODO: Parse command options and check for any required fields?
-		const withArgs: MessageWithArgs = Object.assign({}, message, { args });
+		const withArgs: MessageWithArgs = Object.assign(message, { args });
 		const ret = await found.exec(withArgs);
-		await message.reply(ret);
+		if (ret) await message.reply(ret);
 
 		return;
 	};

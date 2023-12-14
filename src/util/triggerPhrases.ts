@@ -13,15 +13,19 @@ const sendDocs = async (
 		Object.assign({}, caller, { args: query.split(" ") }),
 	);
 
+	if (!resp) return false;
 	resp.content = replyMessage;
 	caller.reply(resp);
 	return true;
 };
 
-export const triggerPhrase = async (caller: Message): Promise<boolean> => {
+export const triggerPhrase = async (
+	caller: Message,
+	force = false,
+): Promise<boolean> => {
 	if (!caller.member || !caller.member.joinedAt) return false;
 
-	if (process.env.NODE_ENV !== "development") {
+	if (!force && process.env.NODE_ENV !== "development") {
 		// don't bother people that have been here at least 2 weeks
 		const week = new Date();
 		week.setDate(new Date().getDate() - 14);
@@ -118,10 +122,23 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 			content.includes("put it on"))
 	) {
 		await caller.reply(
-			"Hosting Spacebar on replit, heroku, vercel, or other such platforms is not supported. " +
+			"Hosting Spacebar on replit, heroku, vercel, or other such platforms is not supported.\n" +
 				"While you *can* do it, it is not a good experience for the user or the instance owner.\n" +
 				"A big issue with hosting on replit is that you have nowhere to host a dedicated database, which forces you to use sqlite, " +
 				"but you cannot edit the sqlite database that is used.",
+		);
+		return true;
+	}
+
+	if (
+		content.match(
+			/when will (((spacebar|space bar) ?(chat)?)|it|fosscord) release\??/,
+		)
+	) {
+		await caller.reply(
+			"Spacebar is an open source project and is already released!\n" +
+				"Please visit <https://docs.spacebar.chat> for information on how to setup and use Spacebar.\n" +
+				"You can also find our Github at <https://github.com/spacebarchat>",
 		);
 		return true;
 	}
