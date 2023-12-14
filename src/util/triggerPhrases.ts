@@ -148,5 +148,15 @@ export const triggerPhrase = async (caller: Message): Promise<boolean> => {
 		return true;
 	}
 
+	if (content.match(/Config key '(\w*)' has invalid JSON value/gi)) {
+		return await sendDocs(
+			"configuration",
+			"Spacebar server parses config values as JSON, which means that string values must be wrapped in quotes.\n" +
+				"For example, if you want to set `api_publicEndpoint` to " +
+				'`http://localhost:3001/api`, set it\'s `value` to `"http://localhost:3001/api"` *with* the doublequotes.',
+			caller,
+		);
+	}
+
 	return false;
 };
