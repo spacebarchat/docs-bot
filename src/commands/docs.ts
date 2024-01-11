@@ -196,7 +196,7 @@ const SPACEBAR_DOCS_EMBED = {
 				{
 					inline: true,
 					name: "Server Setup",
-					value: `[Link](${SPACEBAR_DOCS_BASE_URL}/server/setup)`,
+					value: `[Link](${SPACEBAR_DOCS_BASE_URL}/setup/server)`,
 				},
 				{
 					inline: true,
